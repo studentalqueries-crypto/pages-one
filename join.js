@@ -391,7 +391,7 @@ function fallbackCopyToClipboard(text) {
 }
 
 // Google Sheets integration configuration
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylOB8EydHYtE9xn-qAoYoWrsguqXMP09rHgOPfFME/dev"
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzcRIA7wecL-BpcjDvnjvPlnnbOZQP6oJZpFclYq68QpPgLHEtL4sAXINkdrP9afRQs/exec"
 
 // Form submission
 document.getElementById("registrationForm").addEventListener("submit", async (e) => {

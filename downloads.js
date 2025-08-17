@@ -115,7 +115,7 @@ let selectedUniversityProb = "NTRUHS"
 let selectedYearProb = "1st"
 
 // Google Sheets integration configuration
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylOB8EydHYtE9xn-qAoYoWrsguqXMP09rHgOPfFME/dev"
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzcRIA7wecL-BpcjDvnjvPlnnbOZQP6oJZpFclYq68QpPgLHEtL4sAXINkdrP9afRQs/exec"
 
 // Tab functionality
 function showTab(tabName) {
