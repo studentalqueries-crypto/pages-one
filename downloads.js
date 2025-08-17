@@ -114,6 +114,9 @@ let selectedYear = "1st"
 let selectedUniversityProb = "NTRUHS"
 let selectedYearProb = "1st"
 
+// Google Sheets integration configuration
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
+
 // Tab functionality
 function showTab(tabName) {
   // Hide all tab contents
@@ -259,7 +262,7 @@ function updateProbableQuestions() {
   }
 }
 
-// Contact form submission
+// Contact form submission with Google Sheets integration
 document.getElementById("contactForm").addEventListener("submit", async function (e) {
   e.preventDefault()
 
@@ -270,10 +273,10 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
   function setLoadingState(button, isLoading) {
     if (isLoading) {
-      button.textContent = "Loading..."
+      button.textContent = "Sending..."
       button.disabled = true
     } else {
-      button.textContent = "Submit"
+      button.textContent = "Send Message"
       button.disabled = false
     }
   }
@@ -292,17 +295,59 @@ document.getElementById("contactForm").addEventListener("submit", async function
   setLoadingState(submitBtn, true)
 
   try {
-    // For demo purposes, we'll simulate a successful submission
-    // In production, this would call the actual API
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    // Prepare submission data for Google Sheets
+    const submissionData = {
+      action: "addContact",
+      data: {
+        timestamp: new Date().toISOString(),
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+        status: "New",
+      },
+    }
 
-    showNotification("Message sent successfully! We'll get back to you within 24 hours.", "success")
+    // Submit to Google Sheets
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(submissionData),
+      mode: "cors",
+    })
 
-    // Reset form
-    this.reset()
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const result = await response.json()
+
+    if (result.success) {
+      showNotification("Message sent successfully! We'll get back to you within 24 hours.", "success")
+      // Reset form
+      this.reset()
+    } else {
+      throw new Error(result.error || "Submission failed")
+    }
   } catch (error) {
     console.error("Contact form error:", error)
-    showNotification("Failed to send message. Please try again.", "error")
+
+    // Provide more specific error messages
+    let errorMessage = "Failed to send message. "
+
+    if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+      errorMessage += "Please check your internet connection and try again."
+    } else if (error.message.includes("CORS")) {
+      errorMessage += "There's a configuration issue. Please contact support."
+    } else if (error.message.includes("HTTP error")) {
+      errorMessage += "Server error. Please try again later."
+    } else {
+      errorMessage += "Please try again or contact support if the problem persists."
+    }
+
+    showNotification(errorMessage, "error")
   } finally {
     setLoadingState(submitBtn, false)
   }

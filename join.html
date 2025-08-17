@@ -179,10 +179,44 @@
                                 </div>
                             </div>
 
+                            <!-- Added StuDental bank account details section -->
                             <div id="bankDetails" class="payment-details" style="display: none;">
+                                <div class="bank-details-card">
+                                    <h4>🏦 StuDental Bank Account Details</h4>
+                                    <div class="bank-info">
+                                        <div class="bank-row">
+                                            <span class="bank-label">Account Name:</span>
+                                            <span class="bank-value">StuDental Education Services</span>
+                                            <button type="button" class="copy-btn" onclick="copyToClipboard('StuDental Education Services')">📋</button>
+                                        </div>
+                                        <div class="bank-row">
+                                            <span class="bank-label">Account Number:</span>
+                                            <span class="bank-value">1234567890123456</span>
+                                            <button type="button" class="copy-btn" onclick="copyToClipboard('1234567890123456')">📋</button>
+                                        </div>
+                                        <div class="bank-row">
+                                            <span class="bank-label">IFSC Code:</span>
+                                            <span class="bank-value">SBIN0001234</span>
+                                            <button type="button" class="copy-btn" onclick="copyToClipboard('SBIN0001234')">📋</button>
+                                        </div>
+                                        <div class="bank-row">
+                                            <span class="bank-label">Bank Name:</span>
+                                            <span class="bank-value">State Bank of India</span>
+                                            <button type="button" class="copy-btn" onclick="copyToClipboard('State Bank of India')">📋</button>
+                                        </div>
+                                        <div class="bank-row">
+                                            <span class="bank-label">Branch:</span>
+                                            <span class="bank-value">Hyderabad Main Branch</span>
+                                            <button type="button" class="copy-btn" onclick="copyToClipboard('Hyderabad Main Branch')">📋</button>
+                                        </div>
+                                    </div>
+                                    <div class="bank-note">
+                                        <p><strong>Note:</strong> After making the bank transfer, please enter your bank account details below and provide the UTR number for verification.</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    <label for="bankAccount">Bank Account Details *</label>
-                                    <input type="text" id="bankAccount" name="bankAccount" placeholder="Enter your bank account details">
+                                    <label for="bankAccount">Your Bank Account Details *</label>
+                                    <input type="text" id="bankAccount" name="bankAccount" placeholder="Enter your bank account number">
                                 </div>
                             </div>
 

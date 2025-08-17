@@ -351,6 +351,48 @@ function selectPaymentMethod(method) {
   }
 }
 
+// Copy to clipboard function
+function copyToClipboard(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    // Use modern clipboard API
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        showNotification("Copied to clipboard!", "success")
+      })
+      .catch(() => {
+        fallbackCopyToClipboard(text)
+      })
+  } else {
+    // Fallback for older browsers
+    fallbackCopyToClipboard(text)
+  }
+}
+
+// Fallback copy function for older browsers
+function fallbackCopyToClipboard(text) {
+  const textArea = document.createElement("textarea")
+  textArea.value = text
+  textArea.style.position = "fixed"
+  textArea.style.left = "-999999px"
+  textArea.style.top = "-999999px"
+  document.body.appendChild(textArea)
+  textArea.focus()
+  textArea.select()
+
+  try {
+    document.execCommand("copy")
+    showNotification("Copied to clipboard!", "success")
+  } catch (err) {
+    showNotification("Failed to copy. Please copy manually.", "error")
+  }
+
+  document.body.removeChild(textArea)
+}
+
+// Google Sheets integration configuration
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
+
 // Form submission
 document.getElementById("registrationForm").addEventListener("submit", async (e) => {
   e.preventDefault()
@@ -392,41 +434,92 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
     totalAmount = formData.selectedSubjects.length * yearData.individualPrice
   }
 
+  // Prepare submission data for Google Sheets
   const submissionData = {
-    ...formData,
-    totalAmount,
-    subjects: formData.selectedSubjects.join(", "),
-    subjectCount: formData.selectedSubjects.length,
+    action: "addRegistration",
+    data: {
+      timestamp: new Date().toISOString(),
+      name: formData.name,
+      email: formData.email,
+      whatsapp: formData.whatsapp,
+      university: formData.university,
+      year: formData.year,
+      college: formData.college,
+      subjects: formData.selectedSubjects.join(", "),
+      subjectCount: formData.selectedSubjects.length,
+      paymentMethod: formData.paymentMethod,
+      upiId: formData.paymentMethod === "upi" ? formData.upiId : "",
+      bankDetails: formData.paymentMethod === "bank" ? formData.bankAccount : "",
+      utrNumber: formData.utrNumber,
+      totalAmount: totalAmount.toString(),
+      status: "Pending Verification",
+    },
   }
 
   setLoadingState(submitBtn, true)
 
   try {
-    // For demo purposes, we'll simulate a successful submission
-    // In production, this would call the actual API
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    // Submit to Google Sheets
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(submissionData),
+      mode: "cors",
+    })
 
-    showNotification("Registration submitted successfully! You will receive a confirmation email shortly.", "success")
-
-    // Reset form
-    document.getElementById("registrationForm").reset()
-    formData = {
-      name: "",
-      email: "",
-      whatsapp: "",
-      university: "",
-      year: "",
-      college: "",
-      selectedSubjects: [],
-      paymentMethod: "upi",
-      upiId: "",
-      bankAccount: "",
-      utrNumber: "",
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
-    showStep(1)
+
+    const result = await response.json()
+
+    if (result.success) {
+      showNotification("Registration submitted successfully! You will receive a confirmation email shortly.", "success")
+
+      // Reset form
+      document.getElementById("registrationForm").reset()
+      formData = {
+        name: "",
+        email: "",
+        whatsapp: "",
+        university: "",
+        year: "",
+        college: "",
+        selectedSubjects: [],
+        paymentMethod: "upi",
+        upiId: "",
+        bankAccount: "",
+        utrNumber: "",
+      }
+      showStep(1)
+
+      // Reset UI elements
+      document.getElementById("collegeGroup").style.display = "none"
+      document.getElementById("pricingCard").style.display = "none"
+      document.getElementById("subjectsContainer").innerHTML = ""
+      document.getElementById("yearTitle").textContent = "Select Year First"
+    } else {
+      throw new Error(result.error || "Submission failed")
+    }
   } catch (error) {
     console.error("Submission error:", error)
-    showNotification("Failed to submit registration. Please try again.", "error")
+
+    // Provide more specific error messages
+    let errorMessage = "Failed to submit registration. "
+
+    if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+      errorMessage += "Please check your internet connection and try again."
+    } else if (error.message.includes("CORS")) {
+      errorMessage += "There's a configuration issue. Please contact support."
+    } else if (error.message.includes("HTTP error")) {
+      errorMessage += "Server error. Please try again later."
+    } else {
+      errorMessage += "Please try again or contact support if the problem persists."
+    }
+
+    showNotification(errorMessage, "error")
   } finally {
     setLoadingState(submitBtn, false)
   }

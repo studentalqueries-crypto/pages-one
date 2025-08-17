@@ -1051,6 +1051,82 @@ h6 {
   transition: height 0.5s ease;
 }
 
+/* Bank Details Styling */
+.bank-details-card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.bank-details-card h4 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+}
+
+.bank-info {
+  margin-bottom: 1rem;
+}
+
+.bank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bank-row:last-child {
+  border-bottom: none;
+}
+
+.bank-label {
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 120px;
+}
+
+.bank-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+  text-align: center;
+}
+
+.copy-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  min-height: 32px;
+  min-width: 32px;
+}
+
+.copy-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.bank-note {
+  background-color: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.bank-note p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
 /* Contact Section Styles */
 .contact-grid {
   display: grid;
@@ -1432,6 +1508,9 @@ h6 {
 
   .mobile-menu-btn {
     display: block;
+    padding: 0.75rem;
+    min-height: 44px;
+    min-width: 44px;
   }
 
   .hero-title {
@@ -1494,15 +1573,72 @@ h6 {
   .papers-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Enhanced button touch targets for mobile */
+  .btn {
+    min-height: 44px;
+    padding: 0.875rem 1.5rem;
+  }
+
+  .btn-large {
+    min-height: 48px;
+    padding: 1rem 2rem;
+  }
+
+  /* Better form spacing on mobile */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    min-height: 44px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  /* Improved navigation spacing */
+  .nav-wrapper {
+    padding: 0.75rem 0;
+  }
+
+  .header-content {
+    padding: 0.75rem 0;
+  }
+
+  /* Enhanced mobile responsiveness for bank details */
+  .bank-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 1rem 0;
+  }
+
+  .bank-label {
+    min-width: auto;
+    font-size: 0.875rem;
+  }
+
+  .bank-value {
+    text-align: left;
+    font-size: 0.875rem;
+    word-break: break-all;
+  }
+
+  .copy-btn {
+    align-self: flex-end;
+    margin-top: 0.5rem;
+  }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 0.5rem;
+    padding: 0 0.75rem;
   }
 
   .hero-title {
     font-size: 2rem;
+    line-height: 1.1;
   }
 
   .hero-description {
@@ -1535,5 +1671,80 @@ h6 {
   .probable-stats {
     align-self: stretch;
     justify-content: space-between;
+  }
+
+  /* Better mobile typography and spacing */
+  .hero {
+    padding: 3rem 0;
+  }
+
+  .features,
+  .courses,
+  .batches {
+    padding: 3rem 0;
+  }
+
+  .feature-card,
+  .course-card {
+    padding: 1.5rem;
+  }
+
+  .section-header h1,
+  .section-title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  .hero-buttons,
+  .cta-buttons {
+    gap: 0.75rem;
+  }
+
+  /* Enhanced form responsiveness */
+  .registration-container {
+    padding: 1rem;
+  }
+
+  .form-card {
+    padding: 1rem;
+  }
+
+  .progress-steps {
+    margin-bottom: 2rem;
+  }
+
+  .step {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Added extra small screen optimizations */
+@media (max-width: 360px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .btn-large {
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .form-card {
+    padding: 1rem;
+  }
+
+  .course-card {
+    padding: 1rem;
   }
 }
