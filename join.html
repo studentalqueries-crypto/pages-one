@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Course - StuDental</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-btn">← Back to Home</a>
+                <div class="page-title">
+                    <span class="page-icon">🎓</span>
+                    <span>Course Registration</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="registration-container">
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="step active" id="step1">1</div>
+                <div class="step-line"></div>
+                <div class="step" id="step2">2</div>
+                <div class="step-line"></div>
+                <div class="step" id="step3">3</div>
+            </div>
+
+            <form id="registrationForm" class="registration-form">
+                <!-- Step 1: Personal & Academic Information -->
+                <div class="form-step active" id="formStep1">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <h2>🏛️ Personal & Academic Information</h2>
+                            <p>Please provide your personal details and academic information</p>
+                        </div>
+                        <div class="form-content">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Full Name *</label>
+                                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="whatsapp">WhatsApp Phone Number *</label>
+                                <input type="tel" id="whatsapp" name="whatsapp" required placeholder="Enter your WhatsApp number">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="university">University *</label>
+                                    <select id="university" name="university" required onchange="updateColleges()">
+                                        <option value="">Select your university</option>
+                                        <option value="NTRUHS">NTRUHS</option>
+                                        <option value="KNRUHS">KNRUHS</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="year">Year *</label>
+                                    <select id="year" name="year" required onchange="updateSubjects()">
+                                        <option value="">Select your year</option>
+                                        <option value="1st">1st Year BDS</option>
+                                        <option value="2nd">2nd Year BDS</option>
+                                        <option value="3rd">3rd Year BDS</option>
+                                        <option value="4th">4th Year BDS</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="collegeGroup" style="display: none;">
+                                <label for="college">College *</label>
+                                <select id="college" name="college" required>
+                                    <option value="">Select your college</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="nextStep(1)">Next: Select Subjects</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Subject Selection -->
+                <div class="form-step" id="formStep2">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <h2>Subject Selection</h2>
+                            <p>Choose the subjects you want to enroll for</p>
+                        </div>
+                        <div class="form-content">
+                            <div class="subjects-header">
+                                <h3 id="yearTitle">Select Year First</h3>
+                                <button type="button" class="btn btn-outline" onclick="toggleAllSubjects()">Select All (Bundle)</button>
+                            </div>
+                            <div id="subjectsContainer" class="subjects-container">
+                                <!-- Subjects will be populated by JavaScript -->
+                            </div>
+                            <div id="pricingCard" class="pricing-card" style="display: none;">
+                                <div class="pricing-info">
+                                    <div>
+                                        <h4>Total Amount</h4>
+                                        <p id="selectedCount">0 subject(s) selected</p>
+                                    </div>
+                                    <div class="price-display">
+                                        <div id="totalPrice">₹0</div>
+                                        <div id="bundleDiscount" class="discount-text" style="display: none;">Bundle discount applied!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="prevStep(2)">Back</button>
+                                <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next: Payment Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Payment Details -->
+                <div class="form-step" id="formStep3">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <h2>💳 Payment Details</h2>
+                            <p>Complete your payment and provide transaction details</p>
+                        </div>
+                        <div class="form-content">
+                            <!-- Payment Summary -->
+                            <div class="payment-summary">
+                                <div class="summary-row">
+                                    <span>Selected Subjects:</span>
+                                    <span id="summarySubjects">0</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Year:</span>
+                                    <span id="summaryYear">-</span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span>Total Amount:</span>
+                                    <span id="summaryTotal">₹0</span>
+                                </div>
+                            </div>
+
+                            <!-- QR Code -->
+                            <div class="qr-section">
+                                <h3>🔲 Payment QR Code</h3>
+                                <div class="qr-container">
+                                    <img src="studental-bds-payment-qr.png" alt="Payment QR Code" class="qr-code">
+                                    <p>Scan this QR code to make payment</p>
+                                </div>
+                            </div>
+
+                            <!-- Payment Method -->
+                            <div class="payment-methods">
+                                <label>Payment Method</label>
+                                <div class="method-options">
+                                    <div class="method-option active" onclick="selectPaymentMethod('upi')">
+                                        <input type="radio" name="paymentMethod" value="upi" checked>
+                                        <span>UPI Payment</span>
+                                    </div>
+                                    <div class="method-option" onclick="selectPaymentMethod('bank')">
+                                        <input type="radio" name="paymentMethod" value="bank">
+                                        <span>Bank Transfer</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment Details Form -->
+                            <div id="upiDetails" class="payment-details">
+                                <div class="form-group">
+                                    <label for="upiId">UPI ID *</label>
+                                    <input type="text" id="upiId" name="upiId" placeholder="Enter your UPI ID">
+                                </div>
+                            </div>
+
+                            <div id="bankDetails" class="payment-details" style="display: none;">
+                                <div class="form-group">
+                                    <label for="bankAccount">Bank Account Details *</label>
+                                    <input type="text" id="bankAccount" name="bankAccount" placeholder="Enter your bank account details">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="utrNumber">UTR/Transaction Reference Number *</label>
+                                <input type="text" id="utrNumber" name="utrNumber" required placeholder="Enter transaction reference number">
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="prevStep(3)">Back</button>
+                                <button type="submit" class="btn btn-primary" id="submitBtn">Complete Registration</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="join.js"></script>
+</body>
+</html>

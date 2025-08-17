@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads & Resources - StuDental</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="back-btn">← Back to Home</a>
+                <div class="page-title">
+                    <span class="page-icon">📚</span>
+                    <span>Downloads & Resources</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="downloads-container">
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="showTab('downloads')">📥 Question Papers</button>
+                <button class="tab-btn" onclick="showTab('probable')">📈 Probable Questions</button>
+                <button class="tab-btn" onclick="showTab('contact')">✉️ Contact Us</button>
+            </div>
+
+            <!-- Downloads Tab -->
+            <div class="tab-content active" id="downloads">
+                <div class="section-header">
+                    <h1>Previous Year Question Papers</h1>
+                    <p>Download previous year question papers for NTRUHS & KNRUHS</p>
+                </div>
+
+                <!-- University Selection -->
+                <div class="filter-section">
+                    <div class="university-selector">
+                        <button class="filter-btn active" onclick="selectUniversity('NTRUHS')">🏛️ NTRUHS</button>
+                        <button class="filter-btn" onclick="selectUniversity('KNRUHS')">🏛️ KNRUHS</button>
+                    </div>
+                </div>
+
+                <!-- Year Selection -->
+                <div class="filter-section">
+                    <div class="year-selector">
+                        <button class="filter-btn active" onclick="selectYear('1st')">1st Year</button>
+                        <button class="filter-btn" onclick="selectYear('2nd')">2nd Year</button>
+                        <button class="filter-btn" onclick="selectYear('3rd')">3rd Year</button>
+                        <button class="filter-btn" onclick="selectYear('4th')">4th Year</button>
+                    </div>
+                </div>
+
+                <!-- Question Papers Grid -->
+                <div id="papersGrid" class="papers-grid">
+                    <!-- Papers will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Probable Questions Tab -->
+            <div class="tab-content" id="probable">
+                <div class="section-header">
+                    <h1>Most Probable Questions</h1>
+                    <p>High-probability topics based on previous year analysis</p>
+                </div>
+
+                <!-- University Selection -->
+                <div class="filter-section">
+                    <div class="university-selector">
+                        <button class="filter-btn active" onclick="selectUniversityProb('NTRUHS')">🏛️ NTRUHS</button>
+                        <button class="filter-btn" onclick="selectUniversityProb('KNRUHS')">🏛️ KNRUHS</button>
+                    </div>
+                </div>
+
+                <!-- Year Selection -->
+                <div class="filter-section">
+                    <div class="year-selector">
+                        <button class="filter-btn active" onclick="selectYearProb('1st')">1st Year</button>
+                        <button class="filter-btn" onclick="selectYearProb('2nd')">2nd Year</button>
+                        <button class="filter-btn" onclick="selectYearProb('3rd')">3rd Year</button>
+                        <button class="filter-btn" onclick="selectYearProb('4th')">4th Year</button>
+                    </div>
+                </div>
+
+                <!-- Probable Questions List -->
+                <div class="probable-card">
+                    <div class="card-header">
+                        <h2>📈 High Probability Topics - <span id="probableTitle">NTRUHS 1st Year</span></h2>
+                        <p>Topics with high probability of appearing in exams based on previous year analysis</p>
+                    </div>
+                    <div id="probableList" class="probable-list">
+                        <!-- Probable questions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Tab -->
+            <div class="tab-content" id="contact">
+                <div class="section-header">
+                    <h1>Contact Us</h1>
+                    <p>Have questions? We're here to help you succeed</p>
+                </div>
+
+                <div class="contact-grid">
+                    <!-- Contact Information -->
+                    <div class="contact-info">
+                        <div class="contact-card">
+                            <h2>✉️ Get in Touch</h2>
+                            <p>Reach out to us for any queries or support</p>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div>
+                                    <h4>Email Support</h4>
+                                    <p>studental.queries@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">⏱️</div>
+                                <div>
+                                    <h4>Response Time</h4>
+                                    <p>Within 24 hours</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">📅</div>
+                                <div>
+                                    <h4>Support Hours</h4>
+                                    <p>Monday - Saturday, 9 AM - 6 PM</p>
+                                </div>
+                            </div>
+
+                            <div class="common-queries">
+                                <h4>Common Queries</h4>
+                                <ul>
+                                    <li>• Course enrollment and payment</li>
+                                    <li>• Study material access</li>
+                                    <li>• Technical support</li>
+                                    <li>• Batch timings and schedules</li>
+                                    <li>• Refund and cancellation policy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="contact-form-section">
+                        <div class="contact-card">
+                            <h2>Send us a Message</h2>
+                            <p>Fill out the form below and we'll get back to you soon</p>
+                            
+                            <form id="contactForm" class="contact-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="contactName">Name *</label>
+                                        <input type="text" id="contactName" name="name" required placeholder="Your full name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactEmail">Email *</label>
+                                        <input type="email" id="contactEmail" name="email" required placeholder="Your email address">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactSubject">Subject *</label>
+                                    <input type="text" id="contactSubject" name="subject" required placeholder="What is this regarding?">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactMessage">Message *</label>
+                                    <textarea id="contactMessage" name="message" required placeholder="Please describe your query in detail..." rows="5"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="downloads.js"></script>
+</body>
+</html>
